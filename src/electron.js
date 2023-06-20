@@ -3,45 +3,37 @@ const { app, BrowserWindow, ipcMain, shell } = require('electron');
 const path = require('path');
 const serve = require('electron-serve');
 const loadURL = serve({ directory: 'build' });
-//const { autoUpdater } = require('electron-updater');
+const { autoUpdater } = require('electron-updater');
 const express = require('express');
 const http = require('http');
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 let server;
 let apiServerPort = 3001;
 
-function isDev() {
-  return !app.isPackaged;
-}
+function isDev() {return !app.isPackaged;}
 
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    frame: true,
+    frame: false,
     backgroundColor: '#FFF',
     webPreferences: {
-      // Set a Content Security Policy for the renderer process
-      // This example allows scripts and styles only from the same origin
-      // You should customize this policy to fit your app's needs
+      //Content Security Policy for the renderer process: allows scripts and styles only from the same origin
       contentSecurityPolicy: "default-src 'self'; script-src 'self'; style-src 'self';",
       enableRemoteModule: true,
       nodeIntegration: true,
       contextIsolation: false
     },
     // Use this in development mode.
-    //icon: isDev() ? path.join(process.cwd(), 'public/logo512.png') : path.join(__dirname, 'build/logo512.png'),
-    // Use this in production mode.
-    // icon: path.join(__dirname, 'build/logo512.png'),
+    icon: isDev() ? path.join(process.cwd(), 'public/logo512.png') : path.join(__dirname, 'build/logo512.png'),
     show: false
   });
 
   //start listening for http requests
-  //startServer(apiServerPort)
+  startServer(apiServerPort)
 
   // This block of code is intended for development purpose only.
   // Delete this entire block of code when you are ready to package the application.
@@ -148,8 +140,6 @@ function startServer(port) {
     }
   }
 
-  
-/*
 // App verison update functions
 ipcMain.on('app_version', (event) => {
   event.sender.send('app_version', { version: app.getVersion() });
@@ -261,4 +251,3 @@ ipcMain.handle('get-image-resolution', async (event, filename) => {
 });
 
 
-*/
