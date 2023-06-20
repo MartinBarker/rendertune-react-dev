@@ -1,0 +1,54 @@
+{
+  "name": "rendertune-audit-fix",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/electron.js",
+  "scripts": {
+    "build-react": "react-scripts build",
+    "dev": "concurrently \"npm run start\" \"npm run electron\"",
+    "start": "npx cross-env BROWSER=none react-scripts start",
+    "electron": "wait-on http://localhost:3000 && electron .",
+    "preelectron-pack": "npm run build",
+    "electron-pack": "electron-builder",
+    "build-win": "electron-builder build --win --publish never",
+    "build-mac": "electron-builder build --mac --publish never",
+    "build-mac-publish": "electron-builder build --mac --publish always",
+    "build-mas": "electron-builder build --mac && sh scripts/signmasscript.sh",
+    "download-ffmpeg": "sh scripts/buildffmpeg.sh",
+    "newmas": "electron-builder build --mac --publish always && sh scripts/signmasscript.sh"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@svgr/webpack": "^6.2.1",
+    "electron": "^25.1.1",
+    "electron-builder": "^24.4.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "^5.0.1",
+    "wait-on": "^5.2.0"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.0",
+    "cross-env": "^7.0.3",
+    "electron-serve": "^1.1.0",
+    "express": "^4.18.2",
+    "http": "^0.0.1-security"
+  },
+  "overrides": {
+    "@svgr/webpack": "$@svgr/webpack"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
