@@ -4,7 +4,6 @@ import { FFmpeg, newstartRender, startRender, killProcess } from './FFmpeg';
 import YouTube from './YouTube'
 import FileUploader from './FileUploader'
 import Table from './Table'
-import Test from './Test'
 
 function Project() {
   const [selectedFiles, setSelectedFiles] = useState([]);

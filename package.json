@@ -32,10 +32,16 @@
   "dependencies": {
     "concurrently": "^8.2.0",
     "cross-env": "^7.0.3",
+    "electron-notarize": "^1.2.2",
+    "electron-publish": "^24.5.0",
     "electron-serve": "^1.1.0",
     "electron-updater": "^6.1.1",
+    "execa": "^7.1.1",
     "express": "^4.18.2",
-    "http": "^0.0.1-security"
+    "http": "^0.0.1-security",
+    "material-react-table": "^1.14.0",
+    "moment": "^2.29.4",
+    "music-metadata-browser": "^2.5.10"
   },
   "overrides": {
     "@svgr/webpack": "$@svgr/webpack"
@@ -51,5 +57,214 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "build": {
+    "extraMetadata": {
+      "main": "src/electron.js"
+    },
+    "afterSign": "build-assets/notarize.js",
+    "directories": {
+      "buildResources": "build"
+    },
+    "files": [
+      "!build-assets/**",
+      "main.js",
+      "src/",
+      "src/**/*",
+      "build/**/*",
+      "build-assets",
+      "build-assets/",
+      "build-assets/**/*",
+      "node_modules/ffmpeg-ffprobe-static/ffmpeg",
+      "node_modules/ffmpeg-ffprobe-static/ffprobe"
+    ],
+    "asar": {
+      "smartUnpack": true
+    },
+    "win": {
+      "target": [
+        "nsis-web",
+        "portable",
+        "appx"
+      ]
+    },
+    "appx": {
+      "applicationId": "RenderTune",
+      "identityName": "1845martinbarker.digify",
+      "publisher": "CN=E69B865D-5831-4BE5-9AA4-08E27DAAD66C",
+      "publisherDisplayName": "martinbarker",
+      "backgroundColor": "#a0beeb"
+    },
+    "extraFiles": [
+      {
+        "from": "build-assets/",
+        "to": "build-assets/",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "mac": {
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build-assets/entitlements.mac.plist",
+      "entitlementsInherit": "build-assets/entitlements.mac.plist",
+      "appId": "com.martinbarker.digifyunique",
+      "artifactName": "${productName}-${os}.${ext}",
+      "category": "public.app-category.productivity",
+      "icon": "build-assets/icon.icns",
+      "target": [
+        "mas"
+      ],
+      "asarUnpack": [
+        "node_modules/trash/**"
+      ],
+      "electronLanguages": [
+        "en"
+      ],
+      "extraFiles": [
+        {
+          "from": "build-assets",
+          "to": "build-assets",
+          "filter": [
+            "**/*"
+          ]
+        }
+      ],
+      "extraResources": [
+        {
+          "from": "build-assets",
+          "to": "build-assets",
+          "filter": [
+            "**/*"
+          ]
+        },
+        {
+          "from": "ffmpeg-mac/ffmpeg",
+          "to": "ffmpeg"
+        },
+        {
+          "from": "ffmpeg-mac/ffprobe",
+          "to": "ffprobe"
+        }
+      ],
+      "fileAssociations": [
+        {
+          "ext": [
+            "webm",
+            "mkv",
+            "flv",
+            "vob",
+            "ogv",
+            "drc",
+            "gif",
+            "gifv",
+            "mng",
+            "avi",
+            "mts",
+            "m2ts",
+            "ts",
+            "mov",
+            "qt",
+            "wmv",
+            "yuv",
+            "rm",
+            "rmvb",
+            "asf",
+            "amv",
+            "mp4",
+            "m4v",
+            "mpg",
+            "mp2",
+            "mpeg",
+            "mpe",
+            "mpv",
+            "m2v",
+            "svi",
+            "3gp",
+            "3g2",
+            "mxf",
+            "roq",
+            "nsv",
+            "f4v",
+            "f4p",
+            "f4a",
+            "f4b"
+          ],
+          "name": "Video",
+          "description": "Video files",
+          "role": "Viewer"
+        },
+        {
+          "ext": [
+            "aa",
+            "aac",
+            "aax",
+            "act",
+            "aiff",
+            "alac",
+            "amr",
+            "ape",
+            "au",
+            "awb",
+            "dct",
+            "dss",
+            "dvf",
+            "flac",
+            "gsm",
+            "iklax",
+            "ivs",
+            "m4a",
+            "m4b",
+            "m4p",
+            "mmf",
+            "mp3",
+            "mpc",
+            "msv",
+            "nmf",
+            "nsf",
+            "ogg",
+            "oga",
+            "mogg",
+            "opus",
+            "ra",
+            "rf64",
+            "sln",
+            "tta",
+            "voc",
+            "vox",
+            "wav",
+            "wma",
+            "wv",
+            "8svx",
+            "cda"
+          ],
+          "name": "Audio",
+          "description": "Audio files",
+          "role": "Viewer"
+        }
+      ]
+    },
+    "mas": {
+      "hardenedRuntime": false,
+      "entitlements": "build-assets/entitlements.mas.plist",
+      "entitlementsInherit": "build-assets/entitlements.mas.inherit.plist",
+      "provisioningProfile": "build-assets/embedded.provisionprofile",
+      "binaries": [
+        "dist/mas/RenderTune.app/Contents/Resources/ffmpeg",
+        "dist/mas/RenderTune.app/Contents/Resources/ffprobe"
+      ]
+    },
+    "linux": {
+      "category": "public.app-category.productivity",
+      "icon": "build-assets/icon.png",
+      "target": [
+        "AppImage",
+        "snap"
+      ],
+      "asarUnpack": [
+        "node_modules/trash/**"
+      ]
+    }
   }
 }
