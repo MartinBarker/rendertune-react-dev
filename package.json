@@ -36,7 +36,7 @@
     "electron-publish": "^24.5.0",
     "electron-serve": "^1.1.0",
     "electron-updater": "^6.1.1",
-    "execa": "^7.1.1",
+    "execa": "npm:@esm2cjs/execa@^6.1.1-cjs.1",
     "express": "^4.18.2",
     "http": "^0.0.1-security",
     "material-react-table": "^1.14.0",

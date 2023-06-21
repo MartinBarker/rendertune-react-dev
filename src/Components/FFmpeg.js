@@ -1,29 +1,23 @@
-import React from 'react';
-//import { isPackaged } from 'electron-is-packaged';
-//import {taskkill} from 'taskkill';
-//import fkill from 'fkill';
+import React, { useState, useEffect } from 'react';
 
 const execa = window.require('execa');
+
 
 const readline = window.require('readline');
 const moment = window.require("moment");
 const { ipcRenderer } = window.require('electron');
 
-function newstartRender(renderSettings={}){
+async function newstartRender(renderSettings={}){
     console.log('Ffmpeg.js newstartRender() ',renderSettings)
     let {cmdArgs,outputDuration} = createFfmpegCommand(renderSettings.audioFiles, renderSettings.imageFiles, renderSettings.outputFilepath, renderSettings.outputWidth, renderSettings.outputHeight)
     const ffmpegPath = getFfmpegPath('ffmpeg');
     console.log('outputDuration=',outputDuration)
     console.log('cmdArgs=',cmdArgs.join(' '),'\n calling execa \n')
     
-    /*
-    execaPromise.then((execa) => {
-        const process = execa.default(ffmpegPath, cmdArgs);
-        handleProgress(process, outputDuration);
-      });
-      */
-    //const process = execa(ffmpegPath, cmdArgs);
-    //
+    const process = execa(ffmpegPath, cmdArgs);
+    //handleProgress(process, outputDuration);
+    //const { stdout } = await execa("echo", ["execa is pretty neat!"]);
+    //console.log({ stdout });
 }
 
   //function to create ffmpeg command for slideshow video
