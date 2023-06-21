@@ -108,11 +108,12 @@ function Project() {
   }
 
   return (<>
+{/*
     Begin.
     <br /><hr />
     <YouTube />
     <br /><hr />
-
+*/}
     <FileUploader onFilesSelect={handleFilesSelect} />
 
     <h3>Audio Files</h3>
