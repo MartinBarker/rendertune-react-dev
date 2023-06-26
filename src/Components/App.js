@@ -1,14 +1,10 @@
 import React from 'react';
-import Frame from './Frame'
-import Project from './Project'
+import ExecaTest from './ExecaTest.js'
 
 function App() {
   return (
     <>
-      <Frame />
-      <div style={{ "marginTop": "40px" }}>
-        <Project />
-      </div>
+      <ExecaTest/>
     </>
   );
 }

@@ -18,7 +18,7 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    frame: false,
+    frame: true,
     backgroundColor: '#FFF',
     webPreferences: {
       //Content Security Policy for the renderer process: allows scripts and styles only from the same origin
